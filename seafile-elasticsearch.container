@@ -1,0 +1,22 @@
+[Unit]
+Description=Seafile Elasticsearch
+After=network-online.target seafile-network.service
+
+[Container]
+ContainerName=seafile-elasticsearch
+Network=seafile.network
+NetworkAlias=elasticsearch
+Image=elasticsearch:8.15.0
+Volume=%h/liljeros-cloud-2/seafile/seafile-elasticsearch/data:/usr/share/elasticsearch/data:U
+Environment=discovery.type=single-node
+Environment=bootstrap.memory_lock=true
+Environment=ES_JAVA_OPTS=-Xms1g -Xmx1g
+Environment=xpack.security.enabled=false
+PodmanArgs=--ulimit memlock=-1:-1 --memory=2g
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=900
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,23 @@
+[Unit]
+Description=Seafile MariaDB
+After=network-online.target seafile-network.service
+
+[Container]
+ContainerName=seafile-db
+Network=seafile
+NetworkAlias=db
+Image=mariadb:10.11
+Volume=%h/liljeros-cloud-2/seafile/seafile-mysql/db:/var/lib/mysql:U
+EnvironmentFile=%h/liljeros-cloud-2/seafile.env
+HealthCmd=/usr/local/bin/healthcheck.sh --connect --mariadbupgrade --innodb_initialized
+HealthInterval=20s
+HealthRetries=10
+HealthStartPeriod=30s
+HealthTimeout=5s
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=900
+
+[Install]
+WantedBy=default.target

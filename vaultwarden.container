@@ -1,0 +1,23 @@
+[Unit]
+Description=Vaultwarden password manager
+After=network-online.target
+
+[Container]
+ContainerName=vultwarden
+Image=docker.io/vaultwarden/server:latest-alpine
+AutoUpdate=registry
+PublishPort=3002:80
+Volume=%h/liljeros-cloud-2/vaultwarden/:/data/
+EnvironmentFile=%h/liljeros-cloud-2/vaultwarden.env
+HealthCmd=curl -sf -o /dev/null --max-time 5 http://localhost:80/
+HealthInterval=60s
+HealthRetries=3
+HealthStartPeriod=20s
+HealthTimeout=10s
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=900
+
+[Install]
+WantedBy=default.target

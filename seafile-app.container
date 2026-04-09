@@ -1,0 +1,19 @@
+[Unit]
+Description=Seafile application server
+After=seafile-db.service seafile-memcached.service seafile-elasticsearch.service seafile-network.service
+Requires=seafile-db.service seafile-memcached.service seafile-elasticsearch.service
+
+[Container]
+ContainerName=seafile
+Network=seafile.network
+Image=seafileltd/seafile-pro-mc:12.0-latest
+Volume=%h/liljeros-cloud-2/seafile/seafile-data:/shared
+EnvironmentFile=%h/liljeros-cloud-2/seafile.env
+PublishPort=3001:80
+
+[Service]
+Restart=on-failure
+TimeoutStartSec=900
+
+[Install]
+WantedBy=default.target

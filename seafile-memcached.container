@@ -1,0 +1,16 @@
+[Unit]
+Description=Seafile Memcached
+After=network-online.target seafile-network.service
+
+[Container]
+ContainerName=seafile-memcached
+Network=seafile.network
+NetworkAlias=memcached
+Image=memcached:1.6.29
+Exec=memcached -m 256
+
+[Service]
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

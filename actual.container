@@ -1,0 +1,21 @@
+[Unit]
+Description=Actual Budget
+
+[Container]
+ContainerName=actual
+Image=docker.io/actualbudget/actual-server:latest
+AutoUpdate=registry
+Volume=/home/isaac/liljeros-cloud-2/actual/:/data
+PublishPort=5006:5006
+HealthCmd=node src/scripts/health-check.js
+HealthInterval=60s
+HealthRetries=3
+HealthStartPeriod=20s
+HealthTimeout=10s
+
+[Service]
+Restart=no
+
+[Install]
+WantedBy=multi-user.target default.target
+DefaultInstance=100
