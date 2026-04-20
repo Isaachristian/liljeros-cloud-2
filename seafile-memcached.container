@@ -6,7 +6,7 @@ After=network-online.target seafile-network.service
 ContainerName=seafile-memcached
 Network=seafile.network
 NetworkAlias=memcached
-Image=memcached:1.6.29
+Image=docker.io/memcached:1.6.29
 Exec=memcached -m 256
 
 [Service]
